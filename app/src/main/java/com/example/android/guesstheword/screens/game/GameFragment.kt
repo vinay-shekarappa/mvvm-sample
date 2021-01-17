@@ -17,14 +17,17 @@
 package com.example.android.guesstheword.screens.game
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.android.guesstheword.R
 import com.example.android.guesstheword.databinding.GameFragmentBinding
+import timber.log.Timber
 
 /**
  * Fragment where the game is played
@@ -42,6 +45,8 @@ class GameFragment : Fragment() {
 
     private lateinit var binding: GameFragmentBinding
 
+    private lateinit var viewModel: GameViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -52,6 +57,9 @@ class GameFragment : Fragment() {
                 container,
                 false
         )
+
+        Timber.i("ViewModel provider called...")
+        viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
 
         resetList()
         nextWord()
@@ -131,11 +139,14 @@ class GameFragment : Fragment() {
     /** Methods for updating the UI **/
 
     private fun updateWordText() {
+        Timber.i("new word = $word")
+        Log.i("GameFragment", "new Log word="+word)
         binding.wordText.text = word
 
     }
 
     private fun updateScoreText() {
+        Log.i("GameFragment", "new Log score="+score.toString())
         binding.scoreText.text = score.toString()
     }
 }
